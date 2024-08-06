@@ -16,7 +16,6 @@ async def shared_key_creation(websocket):
     )
     public_key = private_key.public_key()
     public_key = public_key.public_bytes(Encoding.X962,PublicFormat.UncompressedPoint)
-    print(type(public_key))
     #otteniamo la chiave pubblica del nostro interlocutore, poi inviamo la nostra
     peer_public_key = await websocket.recv()
     await websocket.send(bytes(public_key))
