@@ -54,7 +54,7 @@ def initialization(secret, key):
     perm3=RC4_KSA(k3,12)
     perm4=RC4_KSA(k4,12)
 
-    #genero il key-stream V (NB: qui assumo che h sia maggiore di 2 e spezzo k5 in due per usare effettivamente ambedue le parti da 64 bits, altrimenti avrei potuto dare k5 in pasto direttamente a xorshift, ma avrebbe eliso determinati bits)
+    #genero il key-stream V (NB: qui assumo che h sia maggiore di 2 e spezzo k5 in due per usare effettivamente ambedue le parti da 64 bits)
     V = []
     V.append(xorshift64(np.uint64(int(k5[0:64],2))))
     V.append(xorshift64(np.uint64(int(k5[64:128],2))))
