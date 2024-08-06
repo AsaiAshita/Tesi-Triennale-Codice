@@ -52,7 +52,7 @@ def initialization(secret, key):
     return V, perm1, perm2, perm3, perm4
 
 def RC4_KSA (key,length):
-    """Funzione che genera le tabelle di permutazione contenenti valori da 0 a NUMBER_OF_WORDS.ù
+    """Funzione che genera le tabelle di permutazione contenenti valori da 0 a NUMBER_OF_WORDS.
     Prima inizializza la tabella con tali valori, poi la perturba usando key come elemento per generare confusione."""
     S = []
     for i in range(0,NUMBER_OF_WORDS):
