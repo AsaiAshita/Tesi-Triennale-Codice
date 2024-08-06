@@ -54,7 +54,7 @@ def initialization(secret, key):
     perm3=RC4_KSA(k3,12)
     perm4=RC4_KSA(k4,12)
 
-    #genero il key-stream V (NB: qui assumo che h sia maggiore di 2 e spezzo k5 in due per usare effettivamente ambedue le parti da 64 bits, altrimenti avrei potuto dare k5 in pasto direttamente a xorshift, ma avrebbe eliso determinati bits)
+    #genero il key-stream V (NB: qui assumo che h sia maggiore di 2 e spezzo k5 in due per usare effettivamente ambedue le parti da 64 bits)
     V = []
     V.append(xorshift64(np.uint64(int(k5[0:64],2))))
     V.append(xorshift64(np.uint64(int(k5[64:128],2))))
@@ -169,7 +169,7 @@ def round_func (plain, V, perm1, perm2, perm3, perm4, nb):
     #ritorniamo la lista
     return c
 
-def lesca_encrypt_8(msg, V, perm1, perm2, perm3, perm4):
+def lesca_encrypt(msg, V, perm1, perm2, perm3, perm4):
     #trasformo il messaggio in una stringa in binario
     msg = ''.join(format(x, 'b').zfill(WORD_PRECISION) for x in bytearray(msg, 'latin-1'))
 
@@ -201,3 +201,24 @@ def lesca_decrypt(msg, V, perm1, perm2, perm3, perm4):
         a = res[(i*WORD_PRECISION)-8:i*WORD_PRECISION]
         final_string.append(chr(int(a, 2)))
     return ''.join(final_string)
+
+"""DECOMMENTARE PER PROVARE AD USARE IL CODICE
+#Segreto conosciuto dai due dispositivi (qui si simula ogni volta l'uso di un segreto diverso)
+secret = str(bin(secrets.randbits(512))[2:])
+#Creazione Sessione Key a 512 bits tramite Elliptic Curve Diffie Hellman (NB: nel codice in shared_session_key.py manca l'implementazione della comunicazione tra i due dispositivi, ma la simula)
+key = shared_key_creation()
+V, perm1, perm2, perm3, perm4 = initialization(secret, key)
+v1 = []
+for i in range(0,len(V)):
+    v1.append(V[i])
+#prendiamo l'input dall'utente 
+msg = input("Si immetta una stringa da criptare e decriptare: \n")
+#applichiamo Lesca in encrypt ed in decrypt per vedere se funziona
+res = lesca_encrypt(msg, V, perm1, perm2, perm3, perm4)
+#abilitare queste print per fare debugging
+#print("ENCRYPTION!")
+#print(res)
+decrypt = lesca_decrypt(res, v1, perm1, perm2, perm3, perm4)
+#abilitare queste print per fare debugging
+#print("DECRYPTION!")
+#print(decrypt)"""
