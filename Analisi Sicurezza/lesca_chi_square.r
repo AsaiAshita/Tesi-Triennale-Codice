@@ -2,6 +2,7 @@
 obs <- c() #inserire dentro c i risultati dati da lesca_statistical.py per il caso che si vuole valutare
 #Numero totale di valori possibili
 size <- length(obs)
+#obs = round(obs/5, 0) #normalizzazione di obs
 #creiamo un vettore di probabilità uniformi
 exp <- c(rep((1/size), size))
 #otteniamo il valore del chi-square test critico per alpha = 0.05 
